@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "plugins": ["prettier"],
+    "rules": { "prettier/prettier": ["warning", { "endOfLine": "crlf" }] },
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "settings": {},
+    "extends": ["eslint:recommended", "prettier"],
+    "ignorePatterns": [
+        "node_modules/**",
+        "bin/**",
+        "config/**",
+        "data/**",
+        "lib/**",
+        "public/**",
+        "views/**",
+        "utils/**"
+    ]
+}
