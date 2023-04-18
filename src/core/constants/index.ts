@@ -1,3 +1,5 @@
+export const CONFIG_APP = require('../../../app.config.js')
+
 import { SwaggerConfig } from 'src/swagger/swagger.interface'
 
 export const SEQUELIZE = 'SEQUELIZE'
@@ -26,4 +28,11 @@ export const SWAGGER_CONFIG: SwaggerConfig = {
   description: 'Template',
   version: '1.0',
   tags: ['Template'],
+}
+export const QUEUE_NAME = {
+  GMAIL: 'gmail',
+}
+
+export const QUEUE_PROCESS_NAME = {
+  SEND_MAIL: 'SEND_MAIL',
 }
