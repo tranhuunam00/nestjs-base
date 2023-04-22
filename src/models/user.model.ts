@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument } from 'mongoose'
+import { HydratedDocument, ObjectId } from 'mongoose'
 import { ModelsBase } from './interface/base.model.interface'
 
 export type CatDocument = HydratedDocument<User>
@@ -21,7 +21,7 @@ export enum Sex {
 }
 
 @Schema()
-export class User extends ModelsBase {
+export class UserProp extends ModelsBase {
   @Prop({ type: String, required: true })
   username: string
 
@@ -57,7 +57,12 @@ export class User extends ModelsBase {
   avatarUrl: string
 }
 
-export const UserSchema = SchemaFactory.createForClass(User).set(
+export class User extends UserProp {
+  @Prop()
+  _id: ObjectId
+}
+
+export const UserSchema = SchemaFactory.createForClass(UserProp).set(
   'timestamps',
   true
 )

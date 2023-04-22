@@ -3,7 +3,7 @@ import { CONFIG_APP } from 'src/core/constants'
 
 const redisClient = new Redis({
   host: CONFIG_APP.REDIS.HOST,
-  port: CONFIG_APP.REDIS.PORT,
+  port: +CONFIG_APP.REDIS.PORT,
 })
 
 export const pingRedis = () => {

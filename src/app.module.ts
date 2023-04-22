@@ -23,7 +23,7 @@ import { MongooseModule } from '@nestjs/mongoose'
     MongooseModule.forRoot(process.env.MONGODB_URI),
     JwtModule.register({
       global: true,
-      secret: process.env.SECRET_KEY_ADMIN,
+      secret: process.env.JWT_SECRET,
       signOptions: {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRES_TIME_ADMIN,
       },
@@ -51,8 +51,12 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .exclude({ path: 'auth/login', method: RequestMethod.POST })
-      .exclude({ path: 'auth/sign-in', method: RequestMethod.POST })
+
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.POST },
+        { path: 'auth/sign-in', method: RequestMethod.POST },
+        { path: 'auth/verify', method: RequestMethod.GET }
+      )
       .forRoutes('*')
   }
 }

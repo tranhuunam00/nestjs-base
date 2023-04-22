@@ -14,6 +14,7 @@ export class UsersController {
 
   @Get('profile')
   profile() {
+    console.log(this.userRequestProvider.userRequest)
     return this.userRequestProvider.userRequest
   }
 

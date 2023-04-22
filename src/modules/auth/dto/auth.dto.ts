@@ -17,10 +17,6 @@ export class LoginDto {
   @IsNotEmpty()
   @IsString()
   readonly password: string
-
-  @IsString()
-  @IsNotEmpty()
-  readonly otpToken: string
 }
 
 export class SignInDto {
@@ -42,9 +38,10 @@ export class SignInDto {
   readonly sex: string
 
   @IsNumber()
+  @Transform(({ value }) => new Date(value))
   @Transform(({ value }) => +value)
   @IsNotEmpty()
-  readonly dOB: number
+  readonly dOB: Date
 }
 
 export class LogoutDto {}

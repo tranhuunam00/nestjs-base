@@ -19,11 +19,24 @@ export class UserRepositories {
     return await this.userModel.findOne({ ...query })
   }
 
-  async findOneById(id: number) {}
+  async findOneById(id: string) {
+    return await this.userModel.findById(id)
+  }
 
-  async create(data: SignInDto): Promise<User> {
+  async create(data: Partial<User>): Promise<User> {
     const created = new this.userModel(data)
     const result = await created.save({})
     return result
+  }
+  async deleteOne(where: Partial<User>) {
+    await this.userModel.deleteOne({ where })
+  }
+
+  async delete(where: Partial<User>) {
+    await this.userModel.deleteMany({ ...where })
+  }
+
+  async updateOne(where: Partial<User>, data: Partial<User>) {
+    return await this.userModel.updateOne({ ...where }, { ...data })
   }
 }

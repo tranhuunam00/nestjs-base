@@ -1,4 +1,4 @@
-export const IS_ACTIVE_USER = {
-    ACTIVE: true,
-    INACTIVE: false,
+export const USER_STATUS = {
+  ACTIVE: true,
+  INACTIVE: false,
 }

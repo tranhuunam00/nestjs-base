@@ -1,6 +1,5 @@
-export const CONFIG_APP = require('../../../app.config.js')
-
 import { SwaggerConfig } from 'src/swagger/swagger.interface'
+export { CONFIG_APP } from './app.config'
 
 export const SEQUELIZE = 'SEQUELIZE'
 export const MONGOOSE = 'MONGOOSE'
@@ -36,3 +35,5 @@ export const QUEUE_NAME = {
 export const QUEUE_PROCESS_NAME = {
   SEND_MAIL: 'SEND_MAIL',
 }
+
+export const JWT_SECRET = process.env.JWT_SECRET
