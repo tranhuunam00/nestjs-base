@@ -58,7 +58,7 @@ export class UserProp extends ModelsBase {
 }
 
 export class User extends UserProp {
-  @Prop()
+  @Prop({ type: String })
   _id: ObjectId
 }
 

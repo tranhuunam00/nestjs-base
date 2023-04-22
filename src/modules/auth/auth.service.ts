@@ -67,7 +67,7 @@ export class AuthService {
       {
         from: process.env.ADMIN_EMAIL_ADDRESS,
         to: data.email,
-        text: token,
+        text: process.env.ENDPOINT + '/api/auth/verify?code=' + token,
         subject: 'Verify K10-app',
       },
       () => {}
