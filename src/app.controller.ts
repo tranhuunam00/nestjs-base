@@ -1,7 +1,16 @@
-import { Controller, Get } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common'
 import { AppService } from './app.service'
 import { NodeMailerLib } from './lib/nodemailer.lib'
 import { CONFIG_APP } from './core/constants'
+import { FastifyFileInterceptor } from './core/interceptor/fastify-file.interceptor'
+import { editFileName, imageFileFilter } from './lib/multer.lib'
+import { diskStorage } from 'multer'
 
 @Controller()
 export class AppController {
@@ -12,7 +21,7 @@ export class AppController {
     return '2'
   }
 
-  @Get('send=mail')
+  @Get('send-mail')
   async send(): Promise<string> {
     NodeMailerLib.send(
       {
@@ -25,5 +34,21 @@ export class AppController {
       async (error, response) => {}
     )
     return '2'
+  }
+
+  @Post('up-load')
+  @UseInterceptors(
+    FastifyFileInterceptor('image', {
+      storage: diskStorage({
+        destination: './upload/single',
+        filename: editFileName,
+      }),
+
+      fileFilter: imageFileFilter,
+    })
+  )
+  create(@UploadedFile() file: Express.Multer.File) {
+    // return this.promotionService.create(data)
+    console.log(file)
   }
 }

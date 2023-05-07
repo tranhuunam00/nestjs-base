@@ -12,9 +12,10 @@ import FastifyMulter from 'fastify-multer'
 import { Options, Multer } from 'multer'
 
 type MulterInstance = any
-export function FastifyFileInterceptor(
+export function FastifyFilesInterceptor(
   fieldName: string,
-  localOptions: Options
+  maxCount?: number,
+  localOptions?: Options
 ): Type<NestInterceptor> {
   class MixinInterceptor implements NestInterceptor {
     protected multer: MulterInstance
@@ -24,10 +25,7 @@ export function FastifyFileInterceptor(
       @Inject('MULTER_MODULE_OPTIONS')
       options: Multer
     ) {
-      this.multer = (FastifyMulter as any)({
-        ...options,
-        ...localOptions,
-      })
+      this.multer = (FastifyMulter as any)({ ...options, ...localOptions })
     }
 
     async intercept(
@@ -37,7 +35,7 @@ export function FastifyFileInterceptor(
       const ctx = context.switchToHttp()
 
       await new Promise<void>((resolve, reject) =>
-        this.multer.single(fieldName)(
+        this.multer.array(fieldName, maxCount)(
           ctx.getRequest(),
           ctx.getResponse(),
           (error: any) => {
