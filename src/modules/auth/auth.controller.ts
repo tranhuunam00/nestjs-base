@@ -1,6 +1,18 @@
-import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Query,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { LoginDto, SignInDto } from './dto/auth.dto'
+import { FastifyFileInterceptor } from 'src/core/interceptor/fastify-file.interceptor'
+import { diskStorage } from 'multer'
+import { editFileName, imageFileFilter } from 'src/lib/multer.lib'
 
 @Controller('auth')
 export class AuthController {
@@ -13,7 +25,21 @@ export class AuthController {
   }
 
   @Post('sign-in')
-  async SignIn(@Body() data: SignInDto) {
+  @UseInterceptors(
+    FastifyFileInterceptor('image', {
+      storage: diskStorage({
+        destination: './upload/single',
+        filename: editFileName,
+      }),
+
+      fileFilter: imageFileFilter,
+    })
+  )
+  async SignIn(
+    @Body() data: SignInDto,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    console.log(file)
     return await this.authService.signIn(data)
   }
 

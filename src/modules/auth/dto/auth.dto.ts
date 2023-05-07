@@ -37,9 +37,9 @@ export class SignInDto {
   @IsEnum(Sex)
   readonly sex: string
 
-  @IsNumber()
-  @Transform(({ value }) => new Date(value))
+  @IsDate()
   @Transform(({ value }) => +value)
+  @Transform(({ value }) => new Date(value))
   @IsNotEmpty()
   readonly dOB: Date
 }
