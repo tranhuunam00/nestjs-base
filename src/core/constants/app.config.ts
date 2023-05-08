@@ -47,3 +47,4 @@ export const CONFIG_APP = {
     PORT: process.env.REDIS_PORT,
   },
 }
+export const FOLDER_FILE_GOOGLR_DRIVE = 'PictureK10'

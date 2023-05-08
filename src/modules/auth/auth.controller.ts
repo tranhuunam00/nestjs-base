@@ -13,6 +13,7 @@ import { LoginDto, SignInDto } from './dto/auth.dto'
 import { FastifyFileInterceptor } from 'src/core/interceptor/fastify-file.interceptor'
 import { diskStorage } from 'multer'
 import { editFileName, imageFileFilter } from 'src/lib/multer.lib'
+import { uploadGgDrive } from 'src/lib/google_drive.lib'
 
 @Controller('auth')
 export class AuthController {
@@ -39,7 +40,7 @@ export class AuthController {
     @Body() data: SignInDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-    console.log(file)
+    const avatarUrl = await uploadGgDrive(file)
     return await this.authService.signIn(data)
   }
 
