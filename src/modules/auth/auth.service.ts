@@ -8,6 +8,7 @@ import { AUTH_ERROR } from 'src/core/constants/errorMessage'
 import { NodeMailerLib } from 'src/lib/nodemailer.lib'
 import { Status_User } from 'src/models/user.model'
 import { JWT_SECRET } from 'src/core/constants'
+import { comparePassword, hashPassword } from 'src/lib/bcrypt.lib'
 
 @Injectable()
 export class AuthService {
@@ -21,9 +22,19 @@ export class AuthService {
       username: data.username,
       status: Status_User.active,
     })
+
     if (!existedUser) {
       throw new BadGatewayException(AUTH_ERROR.USER_NOT_EXISTED)
     }
+
+    const checkPassword = await comparePassword(
+      existedUser.password,
+      data.password
+    )
+    if (!checkPassword) {
+      throw new BadGatewayException(AUTH_ERROR.PASSWORD_NOT_MATCH)
+    }
+
     const token = await this.jwtService.signAsync(
       {
         _id: existedUser._id,
@@ -50,8 +61,12 @@ export class AuthService {
       throw new BadGatewayException(AUTH_ERROR.USER_ALREADY_EXISTED)
 
     await this.userRepo.delete({ email: data.email })
+    console.log('qiaaa')
+    const hash = await hashPassword(data.password)
 
-    const newUser = await this.userRepo.create(data)
+    const saveData = { ...data, password: hash }
+
+    const newUser = await this.userRepo.create(saveData)
 
     const token = await this.jwtService.signAsync(
       {

@@ -40,7 +40,9 @@ export class AuthController {
     @Body() data: SignInDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-    const avatarUrl = await uploadGgDrive(file)
+    if (file) {
+      const avatarUrl = await uploadGgDrive(file)
+    }
     return await this.authService.signIn(data)
   }
 
