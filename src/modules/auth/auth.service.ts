@@ -49,7 +49,7 @@ export class AuthService {
     return { token: token }
   }
 
-  public async signIn(data: SignInDto) {
+  public async signIn(data: SignInDto & { avatarUrl?: string }) {
     const existedUser = await this.userRepo.findOneByCondition({
       email: data.email,
     })

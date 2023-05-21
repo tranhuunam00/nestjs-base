@@ -129,7 +129,7 @@ export const uploadGgDrive = async file => {
   let result = (await searchFile(fileName).catch(error => {
     console.error(error)
   })) as any
-
+  fs.unlinkSync(file.path)
   return `http://drive.google.com/uc?export=view&id=${result.id}`
 }
 
