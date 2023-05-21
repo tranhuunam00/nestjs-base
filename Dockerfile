@@ -11,6 +11,11 @@ COPY . .
 
 # Cài đặt các phụ thuộc của ứng dụng
 RUN npm install
+RUN npm uninstall bcrypt
+
+RUN npm install bcrypt 
+
+
 
 
 
