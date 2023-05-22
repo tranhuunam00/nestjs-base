@@ -1,7 +1,7 @@
 version: '3.8'
 services:
     nestjs-api-casino:
-        image: casino-image
+        image: nam2302/k10-app
         ports:
             - '8001:8001'
         environment:
