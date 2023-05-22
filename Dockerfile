@@ -15,10 +15,6 @@ RUN npm uninstall bcrypt
 
 RUN npm install bcrypt 
 
-
-
-
-
 EXPOSE 9001
 EXPOSE 3001
 
