@@ -14,7 +14,6 @@ RUN npm install
 RUN npm uninstall bcrypt
 
 RUN npm install bcrypt 
-
 EXPOSE 9001
 EXPOSE 3001
 # Chạy ứng dụng NestJS và Redis khi Docker container được khởi động
