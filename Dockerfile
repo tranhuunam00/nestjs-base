@@ -5,7 +5,6 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Sao chép các tệp cấu hình và mã nguồn của ứng dụng vào thư mục /app trên hình ảnh Docker
-FROM node:18-alpine
 COPY package*.json ./
 COPY . .
 
