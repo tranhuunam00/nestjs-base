@@ -7,10 +7,7 @@ export type SensorDocument = HydratedDocument<Sensor>
 @Schema()
 export class SensorProp extends ModelsBase {
   @Prop({ type: String, required: true })
-  username: string
-
-  @Prop({ type: String, required: true })
-  id_user: string
+  customer: string
 
   @Prop({ type: Date, required: true })
   time: Date

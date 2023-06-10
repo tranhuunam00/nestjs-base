@@ -16,6 +16,7 @@ import { GlobalModule } from './global/global.module'
 import { RolesGuard } from './core/guards/Role.guard'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
+import { SensorModule } from './modules/sensor/sensor.module'
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MongooseModule } from '@nestjs/mongoose'
     AuthModule,
     UsersModule,
     GlobalModule,
+    SensorModule,
   ],
   controllers: [AppController],
   providers: [
