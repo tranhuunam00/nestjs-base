@@ -22,4 +22,5 @@ export class SensorService {
   deleteSensor = async ({ customer }: DeleteSensor) => {
     return await this.sensorRepo.delete({customer})
   }
+  
 }
