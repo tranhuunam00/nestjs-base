@@ -59,7 +59,9 @@ export class AppModule implements NestModule {
         { path: 'auth/sign-in', method: RequestMethod.POST },
         { path: 'auth/verify', method: RequestMethod.GET },
         { path: 'up-load', method: RequestMethod.POST },
-        { path: 'sensor/accelorometer-csv', method: RequestMethod.GET }
+        { path: 'sensor/accelorometer-csv', method: RequestMethod.GET },
+        { path: 'sensor', method: RequestMethod.POST },
+        { path: 'sensor', method: RequestMethod.DELETE }
       )
       .forRoutes('*')
   }
