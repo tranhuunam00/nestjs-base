@@ -38,6 +38,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.setGlobalPrefix('api/')
   app.useStaticAssets({ root: join(__dirname, '../../fastify-file-upload') })
+  // app.useStaticAssets({ root: join(__dirname, '../path') })
+
   await app.register(helmet)
   app.register(contentParser)
 

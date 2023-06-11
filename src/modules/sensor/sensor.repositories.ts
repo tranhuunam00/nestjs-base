@@ -18,6 +18,10 @@ export class SensorRepositories {
     return await this.sensorModel.findById(id)
   }
 
+  async findAllByCustomer(customer: string) {
+    return await this.sensorModel.find({ customer: customer })
+  }
+
   async create(data: Partial<Sensor>): Promise<Sensor> {
     const created = new this.sensorModel(data)
     const result = await created.save({})

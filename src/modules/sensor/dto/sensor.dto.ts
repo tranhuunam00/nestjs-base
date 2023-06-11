@@ -28,3 +28,9 @@ export class DeleteSensor {
   @IsString()
   readonly customer: string
 }
+
+export class  ExportDataCSV {
+  @IsNotEmpty()
+  @IsString()
+  readonly customer: string
+}
