@@ -9,7 +9,7 @@
         "build": "nest build",
         "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
         "start": "nest start",
-        "start:dev": "nest build --webpack --webpackPath webpack-hmr.config.js --watch",
+        "start:dev": "nest start --watch",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node dist/main",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -21,7 +21,6 @@
         "build:models": "node bin/generateModels && prettier --write models/mysql/."
     },
     "dependencies": {
-        "@fastify/helmet": "^10.1.0",
         "@fastify/static": "^6.10.1",
         "@nestjs-modules/mailer": "^1.8.1",
         "@nestjs/bull": "^0.6.3",
@@ -43,7 +42,6 @@
         "csv-writer": "^1.6.0",
         "dotenv": "^16.0.3",
         "fastify-helmet": "^7.1.0",
-        "fastify-multer": "^2.0.3",
         "fastify-multipart": "^5.4.0",
         "fastify-swagger": "^5.2.0",
         "google-auth-library": "^8.7.0",

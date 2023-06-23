@@ -8,9 +8,6 @@ import {
 import { AppService } from './app.service'
 import { NodeMailerLib } from './lib/nodemailer.lib'
 import { CONFIG_APP } from './core/constants'
-import { FastifyFileInterceptor } from './core/interceptor/fastify-file.interceptor'
-import { editFileName, imageFileFilter } from './lib/multer.lib'
-import { diskStorage } from 'multer'
 
 @Controller()
 export class AppController {
@@ -37,16 +34,6 @@ export class AppController {
   }
 
   @Post('up-load')
-  @UseInterceptors(
-    FastifyFileInterceptor('image', {
-      storage: diskStorage({
-        destination: './upload/single',
-        filename: editFileName,
-      }),
-
-      fileFilter: imageFileFilter,
-    })
-  )
   create(@UploadedFile() file: Express.Multer.File) {
     // return this.promotionService.create(data)
     console.log(file)

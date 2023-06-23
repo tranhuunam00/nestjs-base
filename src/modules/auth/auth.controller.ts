@@ -10,9 +10,6 @@ import {
 } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { LoginDto, SignInDto } from './dto/auth.dto'
-import { FastifyFileInterceptor } from 'src/core/interceptor/fastify-file.interceptor'
-import { diskStorage } from 'multer'
-import { editFileName, imageFileFilter } from 'src/lib/multer.lib'
 import { uploadGgDrive } from 'src/lib/google_drive.lib'
 
 @Controller('auth')
@@ -26,16 +23,6 @@ export class AuthController {
   }
 
   @Post('sign-in')
-  @UseInterceptors(
-    FastifyFileInterceptor('image', {
-      storage: diskStorage({
-        destination: './upload/single',
-        filename: editFileName,
-      }),
-
-      fileFilter: imageFileFilter,
-    })
-  )
   async SignIn(
     @Body() data: SignInDto,
     @UploadedFile() file: Express.Multer.File

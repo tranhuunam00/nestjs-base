@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
   Post,
   Query,
   Req,
@@ -13,6 +14,7 @@ import { CreateSensor, DeleteSensor, ExportDataCSV } from './dto/sensor.dto'
 import { FsReadBuffer, FsReadStream } from 'src/helper/fs.helper'
 import * as fs from 'fs'
 import { FastifyRequest, FastifyReply } from 'fastify'
+import { Response } from 'express'
 
 @Controller('sensor')
 export class SensorController {
@@ -29,19 +31,20 @@ export class SensorController {
 
   @Get('accelorometer-csv')
   async exportAccelerometerCSV(
-    @Req() req: FastifyRequest,
-    @Res() reply: FastifyReply,
-
-    @Query() query: ExportDataCSV
+    @Query() query: ExportDataCSV,
+    @Res({ passthrough: true }) res: Response
   ) {
     const filePath = await this.sensorService.exportFileSensorData(query)
-    console.log(filePath)
     const fileStream = await FsReadBuffer(filePath)
-    reply.header('Content-Disposition', `attachment; filename="${filePath}"`)
-    reply.type(
+
+    // Set the headers
+    res.setHeader('Content-Disposition', 'attachment')
+    res.setHeader(
+      'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-    reply.send(fileStream)
+    // Send the response
+    res.end(fileStream)
   }
 }
