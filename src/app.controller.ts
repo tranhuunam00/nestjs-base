@@ -8,6 +8,7 @@ import {
 import { AppService } from './app.service'
 import { NodeMailerLib } from './lib/nodemailer.lib'
 import { CONFIG_APP } from './core/constants'
+import { FileInterceptor } from '@nestjs/platform-express'
 
 @Controller()
 export class AppController {
@@ -34,6 +35,7 @@ export class AppController {
   }
 
   @Post('up-load')
+  @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File) {
     // return this.promotionService.create(data)
     console.log(file)

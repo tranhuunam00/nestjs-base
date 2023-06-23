@@ -61,7 +61,8 @@ export class AppModule implements NestModule {
         { path: 'up-load', method: RequestMethod.POST },
         { path: 'sensor/accelorometer-csv', method: RequestMethod.GET },
         { path: 'sensor', method: RequestMethod.POST },
-        { path: 'sensor', method: RequestMethod.DELETE }
+        { path: 'sensor', method: RequestMethod.DELETE },
+        { path: '/up-load', method: RequestMethod.ALL },
       )
       .forRoutes('*')
   }
