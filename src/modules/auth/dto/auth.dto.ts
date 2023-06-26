@@ -6,13 +6,15 @@ import {
   IsEnum,
   IsDate,
   IsNumber,
+  Allow,
+  IsOptional,
 } from 'class-validator'
 import { Sex } from 'src/models/user.model'
 
 export class LoginDto {
   @IsNotEmpty()
   @IsString()
-  readonly username: string
+  readonly email: string
 
   @IsNotEmpty()
   @IsString()
@@ -22,10 +24,6 @@ export class LoginDto {
 export class SignInDto {
   @IsNotEmpty()
   @IsString()
-  readonly username: string
-
-  @IsNotEmpty()
-  @IsString()
   readonly password: string
 
   @IsString()
@@ -33,15 +31,15 @@ export class SignInDto {
   readonly email: string
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(Sex)
-  readonly sex: string
+  readonly sex?: string
 
   @IsDate()
+  @IsOptional()
   @Transform(({ value }) => +value)
   @Transform(({ value }) => new Date(value))
-  @IsNotEmpty()
-  readonly dOB: Date
+  readonly dOB?: Date
 }
 
 export class LogoutDto {}

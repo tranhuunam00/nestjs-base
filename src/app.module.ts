@@ -17,6 +17,7 @@ import { RolesGuard } from './core/guards/Role.guard'
 import { ConfigModule } from '@nestjs/config'
 import { MongooseModule } from '@nestjs/mongoose'
 import { SensorModule } from './modules/sensor/sensor.module'
+import { MulterModule } from '@nestjs/platform-express'
 
 @Module({
   imports: [
@@ -33,6 +34,11 @@ import { SensorModule } from './modules/sensor/sensor.module'
     UsersModule,
     GlobalModule,
     SensorModule,
+    MulterModule.registerAsync({
+      useFactory: () => ({
+        dest: './path',
+      }),
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -62,7 +68,7 @@ export class AppModule implements NestModule {
         { path: 'sensor/accelorometer-csv', method: RequestMethod.GET },
         { path: 'sensor', method: RequestMethod.POST },
         { path: 'sensor', method: RequestMethod.DELETE },
-        { path: '/up-load', method: RequestMethod.ALL },
+        { path: '/up-load', method: RequestMethod.ALL }
       )
       .forRoutes('*')
   }

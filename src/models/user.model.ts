@@ -23,9 +23,6 @@ export enum Sex {
 @Schema()
 export class UserProp extends ModelsBase {
   @Prop({ type: String, required: true })
-  username: string
-
-  @Prop({ type: String, required: true })
   email: string
 
   @Prop({ type: String, required: true })
@@ -41,16 +38,15 @@ export class UserProp extends ModelsBase {
 
   @Prop({
     type: String,
-    required: true,
     enum: Sex,
     default: Sex.male,
   })
   sex: string
 
-  @Prop({ type: String, enum: Role, default: Role.USER, required: true })
+  @Prop({ type: String, enum: Role, default: Role.USER})
   role: Role
 
-  @Prop({ type: Date, required: true })
+  @Prop({ type: Date })
   dOB: Date
 
   @Prop({ type: String, required: false })

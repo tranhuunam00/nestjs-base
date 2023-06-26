@@ -1,14 +1,12 @@
 import { LoginDto, SignInDto } from './dto/auth.dto'
-
-import { JwtService } from '@nestjs/jwt'
-
 import { UserRepositories } from '../users/user.repositories'
-import { BadGatewayException, Injectable } from '@nestjs/common'
 import { AUTH_ERROR } from 'src/core/constants/errorMessage'
 import { NodeMailerLib } from 'src/lib/nodemailer.lib'
 import { Status_User } from 'src/models/user.model'
 import { JWT_SECRET } from 'src/core/constants'
 import { comparePassword, hashPassword } from 'src/lib/bcrypt.lib'
+import { BadGatewayException, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +17,7 @@ export class AuthService {
 
   public async login(data: LoginDto) {
     const existedUser = await this.userRepo.findOneByCondition({
-      username: data.username,
+      email: data.email,
       status: Status_User.active,
     })
 
@@ -38,8 +36,7 @@ export class AuthService {
     const token = await this.jwtService.signAsync(
       {
         _id: existedUser._id,
-        email: existedUser._id,
-        username: data.username,
+        email: existedUser.email,
       },
       {
         expiresIn: '1d',

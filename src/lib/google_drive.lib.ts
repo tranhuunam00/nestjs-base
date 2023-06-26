@@ -75,7 +75,12 @@ const searchFile = fileName => {
   })
 }
 
-const saveFile = async (fileName, filePath, fileMimeType, folderId) => {
+const saveFile = async (
+  fileName: string,
+  filePath: Buffer,
+  fileMimeType: string,
+  folderId: string
+) => {
   await driveClient.files
     .create({
       requestBody: {
@@ -96,9 +101,8 @@ const saveFile = async (fileName, filePath, fileMimeType, folderId) => {
     })
 }
 
-export const uploadGgDrive = async file => {
+export const uploadGgDrive = async (file: Express.Multer.File) => {
   //ten folder trn driver
-
   const fileName = Date.now().toString() + '_' + file.originalname
   const buf = Buffer.from(file.path)
   const folderName = FOLDER_FILE_GOOGLR_DRIVE
@@ -123,6 +127,7 @@ export const uploadGgDrive = async file => {
         resolve(r)
       })
       .catch(err => {
+        console.log('saveFile  ', err)
         reject(err)
       })
   })

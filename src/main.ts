@@ -13,7 +13,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
   app.setGlobalPrefix('api/')
 
-  app.useStaticAssets(join(__dirname, '../../upload'), { prefix: '/public' })
+  app.useStaticAssets(join(__dirname, '../upload'), { prefix: '/public' })
   // app.useStaticAssets({ root: join(__dirname, '../path') })
 
   await app.listen(process.env.PORT || 9001, '0.0.0.0', () => {

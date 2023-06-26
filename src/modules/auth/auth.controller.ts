@@ -11,6 +11,8 @@ import {
 import { AuthService } from './auth.service'
 import { LoginDto, SignInDto } from './dto/auth.dto'
 import { uploadGgDrive } from 'src/lib/google_drive.lib'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { diskStorage } from 'multer'
 
 @Controller('auth')
 export class AuthController {
@@ -23,12 +25,30 @@ export class AuthController {
   }
 
   @Post('sign-in')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: './path',
+        filename: (req, file, cb) => {
+          const fileExt =
+            file.originalname.split('.')[
+              file.originalname.split('.').length - 1
+            ]
+          cb(null, `${Date.now()}.${fileExt}`)
+        },
+      }),
+    })
+  )
   async SignIn(
     @Body() data: SignInDto,
     @UploadedFile() file: Express.Multer.File
   ) {
     let avatarUrl: string
     if (file) {
+      console.log(
+        '🚀 ~ file: auth.controller.ts:35 ~ AuthController ~ file:',
+        file
+      )
       avatarUrl = await uploadGgDrive(file)
     }
     return await this.authService.signIn({ ...data, avatarUrl })
