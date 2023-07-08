@@ -18,9 +18,9 @@ export class PdfLid<T> {
       PDFNet.runWithCleanup(
         main,
         'demo:1688704175131:7c64ee1203000000002ab5d1d5b7d8f319ed9ac1fc33dbdf285e8a305f'
-      ) // you can add the key to PDFNet.runWithCleanup(main, process.env.PDFTRONKEY)
+      )
         .then(() => {
-          PDFNet.shutdown()
+          // PDFNet.shutdown()
           rev(1)
         })
         .catch((error: Error) => {
@@ -53,7 +53,9 @@ export class PdfLid<T> {
         fs.writeFile(outputPath, text, err => {
           if (err) return console.log(err)
         })
+        fs.unlink(filename, err => {})
       } catch (err) {
+        console.log('main error', err)
         throw err
       }
     }
@@ -61,7 +63,7 @@ export class PdfLid<T> {
       () => main(2),
       async (): Promise<T | Buffer> => {
         // fs.unlink(outputPath, err => {})
-        return await new Promise((rev, rej) => {
+        const data: T | Buffer = await new Promise((rev, rej) => {
           fs.readFile(outputPath, (err, data) => {
             if (err) {
               rej(err)
@@ -69,7 +71,9 @@ export class PdfLid<T> {
               rev(data)
             }
           })
+          fs.unlink(outputPath, err => {})
         })
+        return data
       }
     )
   }
