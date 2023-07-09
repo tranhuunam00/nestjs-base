@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 
 # Thiết lập thư mục làm việc
@@ -14,6 +14,6 @@ RUN npm uninstall bcrypt
 
 RUN npm install bcrypt 
 EXPOSE 9001
-EXPOSE 3001
+EXPOSE 9001
 # Chạy ứng dụng NestJS và Redis khi Docker container được khởi động
 CMD [ "npm", "run", "start" ]

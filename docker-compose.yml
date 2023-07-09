@@ -1,22 +1,22 @@
 version: '3.8'
 services:
-    nestjs-api-casino:
-        image: nam2302/k10-app
-        ports:
-            - '8001:8001'
-        environment:
-            - REDIS_HOST=redis
-            - REDIS_PORT=6379
-        depends_on:
-            - redis
-        networks:
-            - app_net
-    redis:
-        image: redis:latest
-        ports:
-            - '6379:6379'
-        networks:
-            - app_net
+  nestjs-api-casino:
+    image: nam2302/k10-app
+    ports:
+      - '9001:9001'
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - app_net
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - app_net
 networks:
-    app_net:
-        driver: bridge
+  app_net:
+    driver: bridge

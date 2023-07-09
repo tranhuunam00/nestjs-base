@@ -14,6 +14,9 @@ export class PdfLid<T> {
     main: (pageNumber: number) => Promise<void>,
     callback: () => Promise<T | Buffer>
   ): Promise<T | Buffer> => {
+    await PDFNet.initialize(
+      'demo:1688704175131:7c64ee1203000000002ab5d1d5b7d8f319ed9ac1fc33dbdf285e8a305f'
+    )
     await new Promise((rev, rej) => {
       PDFNet.runWithCleanup(
         main,
@@ -33,7 +36,6 @@ export class PdfLid<T> {
   textExtract = async (filename: string, page: number): Promise<Buffer | T> => {
     const outputPath = filename + '.txt'
     const main = async (pageNumber: number) => {
-      await PDFNet.initialize()
       try {
         const pdfdoc = await PDFNet.PDFDoc.createFromFilePath(filename)
         await pdfdoc.initSecurityHandler()
@@ -50,9 +52,8 @@ export class PdfLid<T> {
         fs.writeFile(outputPath, text, err => {
           if (err) return console.log(err)
         })
-        fs.unlink(filename, err => {})
       } catch (err) {
-        console.log('main error', err)
+        console.log('-------------Main error------------', err)
         throw err
       }
     }
@@ -68,7 +69,6 @@ export class PdfLid<T> {
               rev(data)
             }
           })
-          fs.unlink(outputPath, err => {})
         })
         return data
       }
