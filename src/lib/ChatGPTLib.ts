@@ -1,4 +1,4 @@
-import { OpenAIApi, Configuration } from 'openai'
+import { OpenAIApi, Configuration, ChatCompletionRequestMessage } from 'openai'
 
 // OpenAIApi required config
 const configuration = new Configuration({
@@ -18,10 +18,24 @@ export const generateResponseCHATGPT = async (prompt: string) => {
     const result = await openai.createCompletion({
       model: modelId,
       prompt: prompt,
-      temperature: 0,
-      max_tokens: 2048,
     })
     return result.data.choices[0].text
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const generateResponseCHATGPTByChat = async (
+  messages: ChatCompletionRequestMessage[]
+) => {
+  try {
+    const modelId = 'gpt-3.5-turbo'
+
+    const result = await openai.createChatCompletion({
+      model: modelId,
+      messages,
+    })
+    return result.data.choices[0]
   } catch (err) {
     console.error(err)
   }

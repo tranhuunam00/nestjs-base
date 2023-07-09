@@ -69,7 +69,8 @@ export class AppModule implements NestModule {
         { path: 'sensor', method: RequestMethod.POST },
         { path: 'sensor', method: RequestMethod.DELETE },
         { path: '/up-load', method: RequestMethod.ALL },
-        { path: '/upload-paper', method: RequestMethod.ALL }
+        { path: '/upload-paper', method: RequestMethod.ALL },
+        { path: '/chat', method: RequestMethod.ALL }
       )
       .forRoutes('*')
   }

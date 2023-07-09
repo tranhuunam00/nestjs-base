@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
@@ -10,7 +11,10 @@ import { NodeMailerLib } from './lib/nodemailer.lib'
 import { CONFIG_APP } from './core/constants'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { PdfLid } from './lib/pdf'
-import { generateResponseCHATGPT } from './lib/ChatGPTLib'
+import {
+  generateResponseCHATGPT,
+  generateResponseCHATGPTByChat,
+} from './lib/ChatGPTLib'
 
 const pdfLid = new PdfLid('./path')
 @Controller()
@@ -55,13 +59,37 @@ export class AppController {
       },
     })
   )
-  async uploadPaper(@UploadedFile() file: Express.Multer.File) {
-    const output = await pdfLid.textExtract(file?.path, [2])
-    const text = output.toString()
-    const response = await generateResponseCHATGPT(
-      'Tóm tắt bài báo sau  ' + text
+  async uploadPaper(
+    @UploadedFile() file: Express.Multer.File,
+    @Body()
+    data: {
+      pages: string
+    }
+  ) {
+    const listPages: number[] = JSON.parse(data.pages).sort((a, b) => a - b)
+    const textList = await Promise.all(
+      listPages.map(page => pdfLid.textExtract(file?.path, page))
+    )
+
+    return listPages.reduce(
+      (pre, cur, index) => pre + '   TRANG  ' + cur + '   ' + textList[index],
+      ''
+    )
+  }
+
+  @Post('chat')
+  async chat(
+    @UploadedFile() file: Express.Multer.File,
+    @Body()
+    data: {
+      messages: string
+    }
+  ) {
+    const response = await generateResponseCHATGPTByChat(
+      JSON.parse(data.messages)
     )
     // return response
-    return response
+    console.log('response ', response)
+    return response.message.content
   }
 }

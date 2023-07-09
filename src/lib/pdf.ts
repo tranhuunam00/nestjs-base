@@ -30,10 +30,7 @@ export class PdfLid<T> {
 
     return await callback()
   }
-  textExtract = async (
-    filename: string,
-    pages: number[]
-  ): Promise<Buffer | T> => {
+  textExtract = async (filename: string, page: number): Promise<Buffer | T> => {
     const outputPath = filename + '.txt'
     const main = async (pageNumber: number) => {
       await PDFNet.initialize()
@@ -60,7 +57,7 @@ export class PdfLid<T> {
       }
     }
     return await this.PDFNetEndpoint(
-      () => main(2),
+      () => main(page),
       async (): Promise<T | Buffer> => {
         // fs.unlink(outputPath, err => {})
         const data: T | Buffer = await new Promise((rev, rej) => {
