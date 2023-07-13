@@ -9,15 +9,18 @@ import {
   Allow,
   IsOptional,
 } from 'class-validator'
+import { ApiProperty } from '@nestjs/swagger'
 import { Sex } from 'src/models/user.model'
 
 export class LoginDto {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   readonly email: string
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty()
   readonly password: string
 }
 
