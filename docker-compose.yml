@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  k10-app:
+  k10-be:
     image: registry.gitlab.com/tranhuunam23022000/k10-be
     ports:
       - '9001:9001'
