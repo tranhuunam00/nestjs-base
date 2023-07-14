@@ -5,5 +5,5 @@ docker-compose exec k10-app sh
 
 <!-- gitlab -->
 
-docker build -t registry.gitlab.com/tranhuunam23022000/k10-app .
-docker push registry.gitlab.com/tranhuunam23022000/k10-app
+docker build -t registry.gitlab.com/tranhuunam23022000/k10-be .
+docker push registry.gitlab.com/tranhuunam23022000/k10-be
