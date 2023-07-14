@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  nestjs-api-casino:
+  k10-app:
     image: nam2302/k10-app
     ports:
       - '9001:9001'
