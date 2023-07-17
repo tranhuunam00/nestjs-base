@@ -7,3 +7,7 @@ docker-compose exec k10-app sh
 
 docker build -t registry.gitlab.com/tranhuunam23022000/k10-be .
 docker push registry.gitlab.com/tranhuunam23022000/k10-be
+<!-- đã có cicd gitlab -->
+
+<!-- run -->
+docker-compose up --pull --remove-orphans
