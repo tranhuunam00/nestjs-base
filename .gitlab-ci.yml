@@ -30,6 +30,10 @@ test:
     - docker-compose up -d
     - sleep 15
     - docker-compose exec -T k10-be npm run test:cov
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+  artifacts: # Thêm vào phần này
+    paths:
+    - coverage/
 
 release:
   variables:
