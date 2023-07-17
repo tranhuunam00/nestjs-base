@@ -19,26 +19,39 @@ build:
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
-test:
-  stage: test
-  before_script: #--------> Ở đây ta đã xoá đi đoạn cài docker-compose
-    - docker-compose version
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
-  script:
-    - docker-compose up -d
-    - sleep 15
-    - docker-compose exec -T k10-be npm run test:cov
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-  artifacts: # Thêm vào phần này
-    paths:
-    - coverage/
+# test:
+#   stage: test
+#   before_script: #--------> Ở đây ta đã xoá đi đoạn cài docker-compose
+#     - docker-compose version
+#     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+#     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+#   script:
+#     - docker-compose up -d
+#     - sleep 15
+#     - docker-compose exec -T k10-be npm run test:cov
+#   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+#   artifacts: # Thêm vào phần này
+#     paths:
+#     - coverage/
 
-release:
+release-tag:
   variables:
     GIT_STRATEGY: none
   stage: release
+  except:
+    - init-express
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+release-latest:
+  variables:
+    GIT_STRATEGY: none
+  stage: release
+  only:
+    - init-express
   script:
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
