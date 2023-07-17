@@ -29,7 +29,7 @@ test:
   script:
     - docker-compose up -d
     - sleep 15
-    - docker-compose exec -T app npm run test:cov
+    - docker-compose exec -T k10-be npm run test:cov
 
 release:
   variables:
