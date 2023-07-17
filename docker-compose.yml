@@ -4,9 +4,12 @@ services:
     image: registry.gitlab.com/tranhuunam23022000/k10-be
     ports:
       - '9001:9001'
+    env_file:
+      - .env
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      # - MONGODB_URI=mongodb+srv://namthnastech:V9JRE!N9BTBi7-t@appk10.x4ckgjp.mongodb.net/app-k10
     depends_on:
       - redis
     networks:
