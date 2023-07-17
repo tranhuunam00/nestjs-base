@@ -10,4 +10,5 @@ docker push registry.gitlab.com/tranhuunam23022000/k10-be
 <!-- đã có cicd gitlab -->
 
 <!-- run -->
+docker rmi $(docker images -q --filter "dangling=true")
 docker-compose up --pull --remove-orphans
