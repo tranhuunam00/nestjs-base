@@ -114,3 +114,4 @@ deploy:
       echo "ĐÃ compose up thành công"
       docker rmi $(docker images -q --filter "dangling=true")
       echo "ĐÃ xóa image thành công"
+      
