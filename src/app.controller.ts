@@ -48,6 +48,12 @@ export class AppController {
     console.log(file)
   }
 
+  @Get('up-load')
+  alright() {
+    // return this.promotionService.create(data)
+    return "--alright"
+  }
+
   @Post('upload-paper')
   @UseInterceptors(
     FileInterceptor('paper', {

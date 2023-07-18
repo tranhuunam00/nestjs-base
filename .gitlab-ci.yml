@@ -32,12 +32,12 @@ before_script:
   - echo "MONGODB_URI"
   - echo "${MONGODB_URI}"
 
-# build:
-#   stage: build
-#   script:
-#     - docker pull $CI_REGISTRY_IMAGE:latest || true
-#     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-#     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+build:
+  stage: build
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
 # test:
 #   stage: test
@@ -55,28 +55,28 @@ before_script:
 #     paths:
 #     - coverage/
 
-# release-tag:
-#   variables:
-#     GIT_STRATEGY: none
-#   stage: release
-#   except:
-#     - init-express
-#   script:
-#     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-#     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-#     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+release-tag:
+  variables:
+    GIT_STRATEGY: none
+  stage: release
+  except:
+    - init-express
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
 
-# release-latest:
-#   variables:
-#     GIT_STRATEGY: none
-#   stage: release
-#   only:
-#     - init-express
-#   script:
-#     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-#     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
-#     - docker push $CI_REGISTRY_IMAGE:latest
+release-latest:
+  variables:
+    GIT_STRATEGY: none
+  stage: release
+  only:
+    - init-express
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:latest
   
 deploy:
   stage: deploy
@@ -108,7 +108,6 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     
     # Thực hiện SSH vào server, login vào Registry, chuyển tới folder project
-
     - > 
       ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP
       "sudo su -;
