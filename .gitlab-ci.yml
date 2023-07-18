@@ -114,6 +114,7 @@ deploy:
       "sudo su -;
       docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY};
       cat docker-compose.yml;
-      docker-compose up --pull --remove-orphans;
+      docker-compose up --pull --remove-orphans -d;
       docker rmi $(docker images -q --filter "dangling=true");
+      docker image prune -f;
       echo "ĐÃ xóa image thành công";"
