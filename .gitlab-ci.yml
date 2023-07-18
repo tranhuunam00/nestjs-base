@@ -109,8 +109,7 @@ deploy:
     
     # Thực hiện SSH vào server, login vào Registry, chuyển tới folder project
     - ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP
-      "
-      sudo mkdir hehe.txt;
+      "sudo mkdir hehe.txt;
       sudo ls;
       sudo cat docker-compose.yml;"
     - > 
