@@ -119,8 +119,8 @@ deploy:
     # - echo "ĐÃ compose up thành công"
     # - docker rmi $(docker images -q --filter "dangling=true")
     # - echo "ĐÃ xóa image thành công"
-    - ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IPADDRESS "ls"
-    - ssh -o StrictHostKeyChecking=no root@$EC2_IPADDRESS "cd demo-cicd && git pull"
-    - ssh -o StrictHostKeyChecking=no root@$EC2_IPADDRESS "cd demo-cicd && npm i"
-    - ssh -o StrictHostKeyChecking=no root@$EC2_IPADDRESS "cd demo-cicd && (npm start || true)"
+    - ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP "ls"
+    - ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP "cd demo-cicd && git pull"
+    - ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP "cd demo-cicd && npm i"
+    - ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP "cd demo-cicd && (npm start || true)"
     - echo "Application successfully deployed."
