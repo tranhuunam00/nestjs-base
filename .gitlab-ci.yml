@@ -108,23 +108,8 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     
     # Thực hiện SSH vào server, login vào Registry, chuyển tới folder project
-    # Down project, pull image về, up project và xoá đi image cũ
-    
-    # - echo "BẮT ĐẦU SSH"
-    # - ssh $SSH_USER@$SSH_SERVER_IP
-    # - echo "SSH THÀNH CÔNG"
-    # - ls
-    # - docker-compose down
-    # - docker-compose up --pull --remove-orphans
-    # - echo "ĐÃ compose up thành công"
-    # - docker rmi $(docker images -q --filter "dangling=true")
-    # - echo "ĐÃ xóa image thành công"
+
     - > 
       ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP
       "sudo su -;
-      ls;
-      docker-compose down;
-      docker pull ${CI_REGISTRY_IMAGE}:latest;
-      docker-compose up --pull --remove-orphans;
-      docker rmi $(docker images -q --filter "dangling=true");
-      echo "ĐÃ xóa image thành công;"
+      ls;"
