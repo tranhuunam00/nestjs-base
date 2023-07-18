@@ -120,9 +120,10 @@ deploy:
     # - docker rmi $(docker images -q --filter "dangling=true")
     # - echo "ĐÃ xóa image thành công"
     - > 
-      ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP "ls"
-      sudo su -
-      docker-compose down
-      docker-compose up --pull --remove-orphans
-      docker rmi $(docker images -q --filter "dangling=true")
-      echo "ĐÃ xóa image thành công"
+      ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP "ls";
+      sudo su -;
+      docker-compose down;
+      docker pull ${CI_REGISTRY_IMAGE}:latest;
+      docker-compose up --remove-orphans;
+      docker rmi $(docker images -q --filter "dangling=true");
+      echo "ĐÃ xóa image thành công";
