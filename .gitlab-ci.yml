@@ -86,6 +86,10 @@ deploy:
     - init-express
   before_script:
     - apk update && apk add openssh-client bash
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
   script:
     # chạy ssh-agent tương ứng với Gitlab Runner hiện tại
     - eval $(ssh-agent -s)
