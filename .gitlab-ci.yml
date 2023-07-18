@@ -112,6 +112,7 @@ deploy:
     - > 
       ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP
       "sudo su -;
+      cat docker-compose.yml;
       docker-compose up --pull --remove-orphans;
       docker rmi $(docker images -q --filter "dangling=true");
       echo "ĐÃ xóa image thành công";"
