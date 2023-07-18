@@ -83,7 +83,7 @@ deploy:
   variables:
     GIT_STRATEGY: none
   only:
-    - master
+    - init-express
   before_script:
     - apk update && apk add openssh-client bash
   script:
