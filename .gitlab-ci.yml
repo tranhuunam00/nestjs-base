@@ -109,9 +109,9 @@ deploy:
       echo "BẮT ĐẦU SSH"
       ssh $SSH_USER@$SSH_SERVER_IP
       echo "SSH THÀNH CÔNG"
+      ls
       docker-compose down
       docker-compose up --pull --remove-orphans
       echo "ĐÃ compose up thành công"
       docker rmi $(docker images -q --filter "dangling=true")
       echo "ĐÃ xóa image thành công"
-      
