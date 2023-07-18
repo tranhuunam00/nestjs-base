@@ -108,12 +108,13 @@ deploy:
     - chmod 644 ~/.ssh/known_hosts
     
     # Thực hiện SSH vào server, login vào Registry, chuyển tới folder project
-
-    - > 
-      ssh -i "$SSH_PRIVATE_KEY" ec2-user@ec2-3-85-3-86.compute-1.amazonaws.com
+    - ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP
       "sudo su -;
-      cd;
       ls;
+      cat docker-compose.yml;"
+    - > 
+      ssh -o StrictHostKeyChecking=no ec2-user@$SSH_SERVER_IP
+      "sudo su -;
       cat docker-compose.yml;
       docker-compose up --pull --remove-orphans;
       docker rmi $(docker images -q --filter "dangling=true");
