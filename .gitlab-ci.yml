@@ -112,6 +112,7 @@ deploy:
     - > 
       ssh -o StrictHostKeyChecking=no root@$SSH_SERVER_IP
       "sudo su -;
+      docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY};
       cat docker-compose.yml;
       docker-compose up --pull --remove-orphans;
       docker rmi $(docker images -q --filter "dangling=true");
