@@ -109,8 +109,7 @@ deploy:
       echo "BẮT ĐẦU SSH"
       ssh $SSH_USER@$SSH_SERVER_IP
       echo "SSH THÀNH CÔNG"
-      cd ${PATH_TO_PROJECT};
-      docker-compose down;
+      docker-compose down
       docker-compose up --pull --remove-orphans
       echo "ĐÃ compose up thành công"
       docker rmi $(docker images -q --filter "dangling=true")
