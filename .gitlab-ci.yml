@@ -105,13 +105,13 @@ deploy:
     
     # Thực hiện SSH vào server, login vào Registry, chuyển tới folder project
     # Down project, pull image về, up project và xoá đi image cũ
-    - >
-      echo "BẮT ĐẦU SSH"
-      ssh $SSH_USER@$SSH_SERVER_IP
-      echo "SSH THÀNH CÔNG"
-      ls
-      docker-compose down
-      docker-compose up --pull --remove-orphans
-      echo "ĐÃ compose up thành công"
-      docker rmi $(docker images -q --filter "dangling=true")
-      echo "ĐÃ xóa image thành công"
+    
+    -  echo "BẮT ĐẦU SSH"
+    -  ssh $SSH_USER@$SSH_SERVER_IP
+    -  echo "SSH THÀNH CÔNG"
+    -  ls
+    -  docker-compose down
+    -  docker-compose up --pull --remove-orphans
+    -  echo "ĐÃ compose up thành công"
+    -  docker rmi $(docker images -q --filter "dangling=true")
+    -  echo "ĐÃ xóa image thành công"
