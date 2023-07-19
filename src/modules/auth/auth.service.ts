@@ -5,8 +5,8 @@ import { NodeMailerLib } from 'src/lib/nodemailer.lib'
 import { Status_User } from 'src/models/user.model'
 import { JWT_SECRET } from 'src/core/constants'
 import { comparePassword, hashPassword } from 'src/lib/bcrypt.lib'
-import { BadGatewayException, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { BadGatewayException, Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 
 @Injectable()
 export class AuthService {

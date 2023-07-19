@@ -11,6 +11,7 @@ import {
 } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { Sex } from 'src/models/user.model'
+import { BaseUserDto } from 'src/modules/users/dto/user.dto'
 
 export class LoginDto {
   @IsNotEmpty()
@@ -24,25 +25,16 @@ export class LoginDto {
   readonly password: string
 }
 
-export class SignInDto {
+export class SignInDto extends BaseUserDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   readonly password: string
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   readonly email: string
-
-  @IsString()
-  @IsOptional()
-  @IsEnum(Sex)
-  readonly sex?: string
-
-  @IsDate()
-  @IsOptional()
-  @Transform(({ value }) => +value)
-  @Transform(({ value }) => new Date(value))
-  readonly dOB?: Date
 }
 
 export class LogoutDto {}

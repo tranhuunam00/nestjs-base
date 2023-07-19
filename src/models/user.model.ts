@@ -43,7 +43,7 @@ export class UserProp extends ModelsBase {
   })
   sex: string
 
-  @Prop({ type: String, enum: Role, default: Role.USER})
+  @Prop({ type: String, enum: Role, default: Role.USER })
   role: Role
 
   @Prop({ type: Date })
@@ -56,6 +56,9 @@ export class UserProp extends ModelsBase {
 export class User extends UserProp {
   @Prop({ type: String })
   _id: ObjectId
+
+  @Prop({ type: String })
+  id: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserProp).set(
