@@ -27,7 +27,7 @@ import { MulterModule } from '@nestjs/platform-express'
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: process.env.ACCESS_TOKEN_EXPIRES_TIME_ADMIN,
+        expiresIn: 99999999999,
       },
     }),
     AuthModule,

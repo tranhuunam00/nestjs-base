@@ -37,6 +37,7 @@ export class UserRepositories {
   }
 
   async updateOne(where: Partial<User>, data: Partial<User>) {
+    console.log(where, data)
     return await this.userModel.updateOne({ ...where }, { ...data })
   }
 }

@@ -19,9 +19,23 @@ async function bootstrap() {
     .setDescription('The k10 API description')
     .setVersion('1.0')
     .addTag('k10-app')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth'
+    )
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  document.security = [{ bearerAuth: [] }]
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: { persistAuthorization: true },
+  })
 
   await app.listen(process.env.PORT || 9001, '0.0.0.0', () => {
     console.log('Port listen ' + process.env.PORT || 9001)

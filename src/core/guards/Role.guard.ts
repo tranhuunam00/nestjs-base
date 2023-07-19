@@ -17,17 +17,17 @@ export class RolesGuard implements CanActivate {
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<number[]>('roles', context.getHandler())
+    const roles = this.reflector.get<string[]>('roles', context.getHandler())
     if (!roles) {
       return true
     }
 
     const user = this.userRequestProvider.userRequest
-    if (user.type === ROLES.ADMIN) return true
-    return this.matchRoles(roles, user.type)
+    if (user.role === ROLES.ADMIN) return true
+    return this.matchRoles(roles, user.role)
   }
 
-  matchRoles(roles: number[], userRole: number) {
+  matchRoles(roles: string[], userRole: string) {
     if (roles.includes(userRole)) return true
     throw new UnauthorizedException(AUTH_ERROR.NOT_PERMISSION)
   }
